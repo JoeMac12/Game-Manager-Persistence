@@ -6,6 +6,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+	// Display text
 	public TextMeshProUGUI healthText;
 	public TextMeshProUGUI xpText;
 	public TextMeshProUGUI scoreText;
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
 	public Button saveButton;
 	public Button loadButton;
 
+	// Buttons
 	private void Start()
 	{
 		saveButton.onClick.AddListener(SaveGame);
@@ -29,6 +31,7 @@ public class UIManager : MonoBehaviour
 		UpdateUI();
 	}
 
+	// Update UI text
 	private void UpdateUI()
 	{
 		healthText.text = $"Health: {GameManager.Instance.Health}";

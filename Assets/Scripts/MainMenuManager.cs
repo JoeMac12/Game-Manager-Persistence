@@ -12,6 +12,7 @@ public class MainMenuManager : MonoBehaviour
 	public Button loadLevel3Button;
 	public Button clearDataButton;
 
+	// Buttons
 	private void Start()
 	{
 		newGameButton.onClick.AddListener(StartNewGame);
@@ -35,6 +36,7 @@ public class MainMenuManager : MonoBehaviour
 		SceneManager.LoadScene(levelIndex);
 	}
 
+	// Clears any data that's saved
 	private void ClearGameData()
 	{
 		GameManager.Instance.ClearGameData();

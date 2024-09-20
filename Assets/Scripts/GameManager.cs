@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene(3); // Level 3
 	}
 
+	// Tracking playtime
 	private void UpdatePlayTime()
 	{
 		PlayTime += Time.deltaTime;
@@ -158,6 +159,7 @@ public class GameManager : MonoBehaviour
 	}
 }
 
+// Create classes for data
 [System.Serializable]
 public class SaveData
 {
