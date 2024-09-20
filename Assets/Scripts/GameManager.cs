@@ -10,12 +10,15 @@ public class GameManager : MonoBehaviour
 	public static int ManagerCount { get; private set; }
 
 	// Game state variables
-	public int Health { get; set; } = 100;
-	public int XP { get; set; } = 0;
-	public int Score { get; set; } = 0;
-	public int Coins { get; set; } = 0;
-	public int Level { get; set; } = 1;
-	public float PlayTime { get; set; } = 0f;
+	public int Health { get; private set; } = 100;
+	public int XP { get; private set; } = 0;
+	public int Score { get; private set; } = 0;
+	public int Coins { get; private set; } = 0;
+	public int Level { get; private set; } = 1;
+	public float PlayTime { get; private set; } = 0f;
+
+	private const int smallValue = 1;
+	private const int largeValue = 10;
 
 	// Singleton
 	private void Awake()
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
 	{
 		HandleSceneNavigation();
 		UpdatePlayTime();
+		HandleNumpadInput();
 	}
 
 	// Key shortcut for loading levels
@@ -52,6 +56,43 @@ public class GameManager : MonoBehaviour
 		PlayTime += Time.deltaTime;
 	}
 
+	// Numpad controls
+	private void HandleNumpadInput()
+	{
+		// Health
+		if (Input.GetKeyDown(KeyCode.Keypad7)) ModifyHealth(smallValue);
+		if (Input.GetKeyDown(KeyCode.Keypad8)) ModifyHealth(-smallValue);
+
+		// XP
+		if (Input.GetKeyDown(KeyCode.Keypad4)) ModifyXP(smallValue);
+		if (Input.GetKeyDown(KeyCode.Keypad5)) ModifyXP(-smallValue);
+
+		// Score
+		if (Input.GetKeyDown(KeyCode.Keypad1)) ModifyScore(largeValue);
+		if (Input.GetKeyDown(KeyCode.Keypad2)) ModifyScore(-largeValue);
+
+		// Coins
+		if (Input.GetKeyDown(KeyCode.KeypadPlus)) ModifyCoins(smallValue);
+		if (Input.GetKeyDown(KeyCode.KeypadMinus)) ModifyCoins(-smallValue);
+
+		// Level
+		if (Input.GetKeyDown(KeyCode.KeypadMultiply)) ModifyLevel(smallValue);
+		if (Input.GetKeyDown(KeyCode.KeypadDivide)) ModifyLevel(-smallValue);
+
+		// Play Time
+		if (Input.GetKeyDown(KeyCode.Keypad6)) ModifyPlayTime(60f);
+		if (Input.GetKeyDown(KeyCode.Keypad3)) ModifyPlayTime(-60f);
+	}
+
+	// Simple methods for da stats
+	private void ModifyHealth(int amount) => Health = Mathf.Max(0, Health + amount);
+	private void ModifyXP(int amount) => XP = Mathf.Max(0, XP + amount);
+	private void ModifyScore(int amount) => Score = Mathf.Max(0, Score + amount);
+	private void ModifyCoins(int amount) => Coins = Mathf.Max(0, Coins + amount);
+	private void ModifyLevel(int amount) => Level = Mathf.Max(1, Level + amount);
+	private void ModifyPlayTime(float amount) => PlayTime = Mathf.Max(0f, PlayTime + amount);
+
+	// Save game data
 	public void SaveGame()
 	{
 		SaveData data = new SaveData
@@ -68,6 +109,7 @@ public class GameManager : MonoBehaviour
 		File.WriteAllText(Application.persistentDataPath + "/savegame.json", json);
 	}
 
+	// Load game with data
 	public void LoadGame()
 	{
 		string path = Application.persistentDataPath + "/savegame.json";
@@ -85,6 +127,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	// Clear game data
 	public void ClearGameData()
 	{
 		Health = 100;
