@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 	public int Coins { get; private set; } = 0;
 	public int Level { get; private set; } = 1;
 	public float PlayTime { get; private set; } = 0f;
+	public string CurrentSceneName { get; private set; }
 
 	private const int smallValue = 1;
 	private const int largeValue = 10;
@@ -28,11 +29,23 @@ public class GameManager : MonoBehaviour
 			Instance = this;
 			DontDestroyOnLoad(gameObject);
 			ManagerCount++;
+			SceneManager.sceneLoaded += OnSceneLoaded;
 		}
 		else
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	// For getting the current scene level text. Get active scene would also work but might be buggy for this
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		CurrentSceneName = scene.name;
+	}
+
+	private void OnDestroy()
+	{
+		SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
 
 	private void Update()

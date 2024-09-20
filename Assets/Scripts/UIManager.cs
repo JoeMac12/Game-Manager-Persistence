@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
 	public TextMeshProUGUI levelText;
 	public TextMeshProUGUI playTimeText;
 	public TextMeshProUGUI managerCountText;
+	public TextMeshProUGUI currentSceneText;
 
 	public Button saveButton;
 	public Button loadButton;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
 		levelText.text = $"Level: {GameManager.Instance.Level}";
 		playTimeText.text = $"Play Time: {GameManager.Instance.PlayTime:F2}s";
 		managerCountText.text = $"Game Managers: {GameManager.ManagerCount}";
+		currentSceneText.text = $"Current Scene: {GameManager.Instance.CurrentSceneName}";
 	}
 
 	private void SaveGame()
